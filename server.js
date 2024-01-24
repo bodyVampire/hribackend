@@ -7,11 +7,12 @@ const app = express();
 
 //@CORS setup///////////////////
 const corsOptions = {
-  origin: ["https://digistall.in", "http://localhost:3000", "https://gotan.in"],
+  origin: ["https://digistall.in", /\.digistall\.in$/, /\.localhost:3000$/],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
 };
+
 //@ENV///////////////////////////
 
 const port = 5000;
@@ -121,6 +122,7 @@ app.get("/customer/checkphone", async (req, res) => {
   const { phone } = req.query;
 
   try {
+    // console.log("Querying with phone:", phone);
     const existingCustomer = await Customer.findOne({ phoneNumber: phone });
 
     res.json({ exists: !!existingCustomer });

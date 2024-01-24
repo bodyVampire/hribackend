@@ -118,12 +118,25 @@ const CustomerSchema = new mongoose.Schema({
 const Customer = mongoose.model("Customer", CustomerSchema);
 
 //@API to fetch all shops
+// app.get("/customer/checkphone", async (req, res) => {
+//   const { phone } = req.query;
+
+//   try {
+//     console.log("Querying with phone:", phone);
+//     const existingCustomer = await Customer.findOne({ phoneNumber: phone });
+
+//     res.json({ exists: !!existingCustomer });
+//   } catch (error) {
+//     console.error("Error checking phone number existence", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
 app.get("/customer/checkphone", async (req, res) => {
-  const { phone } = req.query;
+  const { phoneNumber } = req.query;
 
   try {
-    // console.log("Querying with phone:", phone);
-    const existingCustomer = await Customer.findOne({ phoneNumber: phone });
+    console.log("Querying with phone:", phoneNumber);
+    const existingCustomer = await Customer.findOne({ phoneNumber });
 
     res.json({ exists: !!existingCustomer });
   } catch (error) {
@@ -131,6 +144,7 @@ app.get("/customer/checkphone", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
 app.get("/customer/checkemail", async (req, res) => {
   const { email } = req.query;
 
